@@ -4,7 +4,8 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "Product"
+    "displayName": "Product",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,6 +17,44 @@
     },
     "Price": {
       "type": "integer"
+    },
+    "SKU": {
+      "type": "uid"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "Catagory": {
+      "type": "enumeration",
+      "enum": [
+        "Containers",
+        "Dustbins",
+        "Planters",
+        "Cookware",
+        "Electrical "
+      ]
+    },
+    "Size": {
+      "type": "string"
+    },
+    "Color": {
+      "type": "string"
+    },
+    "AvailableQty": {
+      "type": "integer",
+      "max": 10,
+      "min": 1,
+      "private": true
     }
   }
 }

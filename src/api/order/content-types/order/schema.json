@@ -4,7 +4,8 @@
   "info": {
     "singularName": "order",
     "pluralName": "orders",
-    "displayName": "order"
+    "displayName": "order",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,8 +15,42 @@
     "Name": {
       "type": "string"
     },
-    "products": {
+    "Products": {
       "type": "json"
+    },
+    "Address": {
+      "type": "string"
+    },
+    "PhoneNo": {
+      "type": "integer",
+      "max": 10,
+      "min": 10,
+      "required": true,
+      "unique": true
+    },
+    "OrderId": {
+      "type": "uid"
+    },
+    "TransactionId": {
+      "type": "string"
+    },
+    "PaymentInfo": {
+      "type": "json"
+    },
+    "Amount": {
+      "type": "integer"
+    },
+    "Status": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Processing",
+        "Packed",
+        "Dispatched"
+      ]
+    },
+    "Email": {
+      "type": "email"
     }
   }
 }
