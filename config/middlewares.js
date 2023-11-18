@@ -20,7 +20,7 @@ module.exports = [
     config: {
       enabled: true,
       headers: '*',
-      origin: ['http://localhost:5173', 'https://strapimaster-production.up.railway.app']
+      origin: ['http://localhost:5173', 'https://strapimaster-production.up.railway.app' , 'https://www.starlightsteel.in']
     }
   },
   'strapi::logger',
