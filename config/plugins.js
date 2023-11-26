@@ -17,4 +17,13 @@
     },
    },
    // ...
+   // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["PhoneNo"],
+      },
+    },
+  },
+  // ...
   });
