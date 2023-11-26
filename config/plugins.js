@@ -21,7 +21,7 @@
   "users-permissions": {
     config: {
       register: {
-        allowedFields: ["PhoneNo"],
+        allowedFields: [ "phoneno" , "deliveryaddress" ],
       },
     },
   },
