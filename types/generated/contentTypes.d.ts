@@ -362,6 +362,100 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiOrderOrder extends Schema.CollectionType {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Products: Attribute.JSON;
+    Address: Attribute.String;
+    PhoneNo: Attribute.Integer &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMax<{
+        min: 10;
+        max: 10;
+      }>;
+    OrderId: Attribute.UID;
+    TransactionId: Attribute.String;
+    PaymentInfo: Attribute.JSON;
+    Amount: Attribute.Integer;
+    Status: Attribute.Enumeration<
+      ['Pending', 'Processing', 'Packed', 'Dispatched']
+    >;
+    Email: Attribute.Email;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Price: Attribute.Integer;
+    SKU: Attribute.UID;
+    Description: Attribute.Text;
+    Image: Attribute.Media;
+    Catagory: Attribute.Enumeration<
+      ['Containers', 'Dustbins', 'Planters', 'Cookware', 'Electrical ']
+    >;
+    Size: Attribute.String;
+    Color: Attribute.String;
+    AvailableQty: Attribute.Integer &
+      Attribute.Private &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 10;
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -482,50 +576,6 @@ export interface PluginUploadFolder extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<{
-        min: 1;
-        max: 50;
-      }>;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -631,7 +681,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -660,6 +709,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    phoneno: Attribute.Integer;
+    deliveryaddress: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -677,93 +728,43 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiOrderOrder extends Schema.CollectionType {
-  collectionName: 'orders';
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
   info: {
-    singularName: 'order';
-    pluralName: 'orders';
-    displayName: 'order';
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
   };
   attributes: {
-    Name: Attribute.String;
-    Products: Attribute.JSON;
-    Address: Attribute.String;
-    PhoneNo: Attribute.Integer &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMax<{
-        min: 10;
-        max: 10;
-      }>;
-    OrderId: Attribute.UID;
-    TransactionId: Attribute.String;
-    PaymentInfo: Attribute.JSON;
-    Amount: Attribute.Integer;
-    Status: Attribute.Enumeration<
-      ['Pending', 'Processing', 'Packed', 'Dispatched']
-    >;
-    Email: Attribute.Email;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
-  info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'Product';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Name: Attribute.String;
-    Price: Attribute.Integer;
-    SKU: Attribute.UID;
-    Description: Attribute.Text;
-    Image: Attribute.Media;
-    Catagory: Attribute.Enumeration<
-      ['Containers', 'Dustbins', 'Planters', 'Cookware', 'Electrical ']
-    >;
-    Size: Attribute.String;
-    Color: Attribute.String;
-    AvailableQty: Attribute.Integer &
-      Attribute.Private &
+    name: Attribute.String &
       Attribute.SetMinMax<{
         min: 1;
-        max: 10;
+        max: 50;
       }>;
+    code: Attribute.String & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::product.product',
+      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::product.product',
+      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -781,14 +782,14 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::order.order': ApiOrderOrder;
+      'api::product.product': ApiProductProduct;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
-      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::order.order': ApiOrderOrder;
-      'api::product.product': ApiProductProduct;
+      'plugin::i18n.locale': PluginI18NLocale;
     }
   }
 }
