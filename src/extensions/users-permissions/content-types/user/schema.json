@@ -65,10 +65,10 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "phoneno": {
-      "type": "integer"
-    },
     "deliveryaddress": {
+      "type": "string"
+    },
+    "phoneno": {
       "type": "string"
     }
   }
