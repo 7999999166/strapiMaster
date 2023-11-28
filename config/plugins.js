@@ -45,4 +45,13 @@
     },
   },
   // ...
+   //...
+  meilisearch: {
+    config: {
+      // Your meili host
+      host: env('MEILI_HOST') ,
+      // Your master key or private key
+      apiKey:env('MEILI_KEY') ,
+    }
+  }
   });
